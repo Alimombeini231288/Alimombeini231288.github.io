@@ -25,6 +25,7 @@ const texts = {
   }
 };
 
+// DOM elements
 const langSelect = document.getElementById('langSelect');
 const title = document.getElementById('title');
 const textInput = document.getElementById('textInput');
@@ -40,6 +41,7 @@ const aiRunBtn = document.getElementById('aiRunBtn');
 const aiResultTitle = document.getElementById('aiResultTitle');
 const aiResult = document.getElementById('aiResult');
 
+// تغییر زبان
 langSelect.addEventListener('change', () => {
   const lang = langSelect.value;
   document.documentElement.lang = lang;
@@ -57,6 +59,7 @@ langSelect.addEventListener('change', () => {
   aiResultTitle.textContent = texts[lang].aiResultTitle;
 });
 
+// ذخیره به فایل txt
 function downloadTxt() {
   const text = textInput.value.trim();
   if (!text) return alert("متنی برای ذخیره وارد نشده است.");
@@ -67,6 +70,7 @@ function downloadTxt() {
   link.click();
 }
 
+// ثبت متن
 function submitText() {
   const text = textInput.value.trim();
   if (!text) {
@@ -91,28 +95,27 @@ function submitText() {
   textInput.value = '';
 }
 
+// دستیار هوش مصنوعی ساده
 function aiAssistant(inputText, action) {
   inputText = inputText.trim();
   if (!inputText) return "لطفاً متنی وارد کنید.";
 
   switch (action) {
     case 'correct':
-      return "متن اصلاح‌شده:
-" + inputText.replace(/\s+/g, ' ').trim();
+      return "متن اصلاح‌شده:\n" + inputText.replace(/\s+/g, ' ').trim();
     case 'continue':
       return inputText + " ... ادامه متن با هوش مصنوعی.";
     case 'summarize':
-      const sentences = inputText.match(/[^\.\!\?]+[\.\!\?]+/g) || [inputText];
-      return "خلاصه:
-" + sentences.slice(0, 2).join(' ');
+      const sentences = inputText.match(/[^\.!\?]+[\.!\?]+/g) || [inputText];
+      return "خلاصه:\n" + sentences.slice(0, 2).join(' ');
     case 'answer':
-      return "پاسخ به سوال شما:
-(هوش مصنوعی فعلاً به صورت شبیه‌سازی شده است.)";
+      return "پاسخ به سوال شما:\n(هوش مصنوعی فعلاً به صورت شبیه‌سازی شده است.)";
     default:
       return "عملیات نامشخص.";
   }
 }
 
+// اجرای دستیار
 aiRunBtn.addEventListener('click', () => {
   const text = aiInput.value;
   const action = aiAction.value;
